@@ -18,4 +18,6 @@ public interface CompanyRepostory {
     Company createCompany(Company company);
 
     Company updateCompany(Company company);
+
+    Company deleteCompany(String companyId);
 }

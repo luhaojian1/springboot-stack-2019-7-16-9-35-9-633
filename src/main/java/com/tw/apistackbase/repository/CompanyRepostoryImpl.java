@@ -58,6 +58,11 @@ public class CompanyRepostoryImpl implements CompanyRepostory {
         return companies.get(company.getCompanyId());
     }
 
+    @Override
+    public Company deleteCompany(String companyId) {
+        return companies.remove(companyId);
+    }
+
     private void createCompany(String id, String companyName, int employeesNumber) {
         Company company = new Company();
         company.setCompanyId(id);

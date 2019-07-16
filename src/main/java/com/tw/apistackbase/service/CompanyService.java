@@ -38,4 +38,8 @@ public class CompanyService {
     public Company updateCompany(Company company) {
         return companyRepostory.updateCompany(company);
     }
+
+    public Company deleteCompany(String companyId) {
+        return companyRepostory.deleteCompany(companyId);
+    }
 }

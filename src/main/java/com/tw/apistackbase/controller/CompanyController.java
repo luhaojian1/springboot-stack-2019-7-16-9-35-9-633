@@ -44,4 +44,9 @@ public class CompanyController {
         company.setCompanyId(companyId);
         return companyService.updateCompany(company);
     }
+
+    @DeleteMapping("/companies/{companyId}")
+    public Company deleteCompany(@PathVariable String companyId) {
+        return companyService.deleteCompany(companyId);
+    }
 }
