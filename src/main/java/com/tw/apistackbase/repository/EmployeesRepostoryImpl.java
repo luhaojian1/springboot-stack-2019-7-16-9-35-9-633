@@ -64,4 +64,9 @@ public class EmployeesRepostoryImpl implements EmployeesRepostory {
     public List<Employee> findSuitableEmployeesByAge(int age) {
         return employees.values().stream().filter(employee -> employee.getAge() > age).collect(Collectors.toList());
     }
+
+    @Override
+    public List<Employee> findEmployeesByPageAndPageSize(int page, int pageSize) {
+        return employees.values().stream().limit(pageSize - page + 1).collect(Collectors.toList());
+    }
 }

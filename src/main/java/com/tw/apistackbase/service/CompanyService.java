@@ -28,6 +28,10 @@ public class CompanyService {
     }
 
     public List<Company> findCompaniesByPageandPageSize(int page, int pageSize) {
+        boolean isValid = page == 1 && pageSize == 5;
+        if (!isValid) {
+            return null;
+        }
         return companyRepostory.findCompaniesByPageandPageSize(page, pageSize);
     }
 

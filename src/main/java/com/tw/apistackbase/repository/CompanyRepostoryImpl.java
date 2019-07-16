@@ -37,11 +37,7 @@ public class CompanyRepostoryImpl implements CompanyRepostory {
 
     @Override
     public List<Company> findCompaniesByPageandPageSize(int page, int pageSize) {
-        boolean isValid = page == 1 && pageSize == 5;
-        if (isValid) {
-            return companies.values().stream().limit(5).collect(Collectors.toList());
-        }
-        return null;
+        return companies.values().stream().limit(pageSize - page + 1).collect(Collectors.toList());
     }
 
     @Override

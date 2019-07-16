@@ -16,4 +16,6 @@ public interface EmployeesRepostory {
     Employee deleteEmployee(String employeeId);
 
     List<Employee> findSuitableEmployeesByAge(int age);
+
+    List<Employee> findEmployeesByPageAndPageSize(int page, int pageSize);
 }

@@ -41,7 +41,11 @@ public class EmployeesController {
 
     @GetMapping(value = "/employees", params = "ageMini")
     public List<Employee> findAgeAbove(@RequestParam int ageMini) {
-        System.out.println(ageMini);
         return employeeSerive.findSuitableEmployeesByAge(ageMini);
+    }
+
+    @GetMapping(value = "/employees", params = {"page", "pageSize"})
+    public List<Employee> findEmployeesByPageAndPageSize(@RequestParam int page, @RequestParam int pageSize) {
+        return employeeSerive.findEmployeesByPageAndPageSize(page, pageSize);
     }
 }

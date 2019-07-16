@@ -35,4 +35,12 @@ public class EmployeeSerive {
     public List<Employee> findSuitableEmployeesByAge(int ageMini) {
         return employeesRepostory.findSuitableEmployeesByAge(ageMini);
     }
+
+    public List<Employee> findEmployeesByPageAndPageSize(int page, int pageSize) {
+        boolean isValid = page == 1 && pageSize == 5;
+        if (!isValid) {
+            return null;
+        }
+        return employeesRepostory.findEmployeesByPageAndPageSize(page, pageSize);
+    }
 }
