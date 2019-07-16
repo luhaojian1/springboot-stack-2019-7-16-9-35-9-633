@@ -22,18 +22,19 @@ public class EmployeesRepostoryImpl implements EmployeesRepostory {
     }
 
     public EmployeesRepostoryImpl() {
-        createEmployee("111", "小明", 18, "female");
-        createEmployee("222", "小明2", 12, "female");
-        createEmployee("333", "小明3", 13, "female");
-        createEmployee("444", "小明4", 14, "female");
+        createEmployee("111", "小明", 18, "female", 7000);
+        createEmployee("222", "小明2", 12, "female", 8000);
+        createEmployee("333", "小明3", 13, "female", 9000);
+        createEmployee("444", "小明4", 14, "female", 6000);
     }
 
-    void createEmployee(String id, String name, int age, String gender) {
+    void createEmployee(String id, String name, int age, String gender, int salary) {
         Employee employee = new Employee();
         employee.setId(id);
         employee.setName(name);
         employee.setAge(age);
         employee.setGender(gender);
+        employee.setSalary(salary);
         employees.put(id, employee);
     }
 
