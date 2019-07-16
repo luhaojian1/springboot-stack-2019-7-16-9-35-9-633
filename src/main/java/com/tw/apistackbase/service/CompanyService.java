@@ -34,4 +34,8 @@ public class CompanyService {
     public Company createCompany(Company company) {
         return companyRepostory.createCompany(company);
     }
+
+    public Company updateCompany(Company company) {
+        return companyRepostory.updateCompany(company);
+    }
 }

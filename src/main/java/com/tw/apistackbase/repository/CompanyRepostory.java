@@ -16,4 +16,6 @@ public interface CompanyRepostory {
     List<Company> findCompaniesByPageandPageSize(int page, int pageSize);
 
     Company createCompany(Company company);
+
+    Company updateCompany(Company company);
 }
