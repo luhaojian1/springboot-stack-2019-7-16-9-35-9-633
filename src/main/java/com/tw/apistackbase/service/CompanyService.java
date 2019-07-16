@@ -26,4 +26,8 @@ public class CompanyService {
     public List<Employee> findCompanyEmployeesByCompanyId(String companyId) {
         return companyRepostory.findCompanyEmployeesByCompanyId(companyId);
     }
+
+    public List<Company> findCompaniesByPageandPageSize(int page, int pageSize) {
+        return companyRepostory.findCompaniesByPageandPageSize(page, pageSize);
+    }
 }

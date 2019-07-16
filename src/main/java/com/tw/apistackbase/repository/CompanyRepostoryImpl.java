@@ -4,18 +4,20 @@ import com.tw.apistackbase.modle.Company;
 import com.tw.apistackbase.modle.Employee;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Repository
-public class CompanyRepostoryImpl implements CompanyRepostory{
-    private Map<String, Company> companies = new HashMap<>();
+public class CompanyRepostoryImpl implements CompanyRepostory {
+    private Map<String, Company> companies = new LinkedHashMap<>();
 
-    public CompanyRepostoryImpl(){
+    public CompanyRepostoryImpl() {
         createCompany("a123", "CVTE", 200);
         createCompany("b123", "TCL", 300);
+        createCompany("c123", "APPLE", 500);
+        createCompany("d123", "HUAWEI", 1000);
+        createCompany("e123", "TENGXUN", 10000);
+        createCompany("f123", "JINGDONG", 900);
     }
 
     @Override
@@ -31,6 +33,15 @@ public class CompanyRepostoryImpl implements CompanyRepostory{
     @Override
     public List<Employee> findCompanyEmployeesByCompanyId(String companyId) {
         return companies.get(companyId).getEmployees();
+    }
+
+    @Override
+    public List<Company> findCompaniesByPageandPageSize(int page, int pageSize) {
+        boolean isValid = page == 1 && pageSize == 5;
+        if (isValid) {
+            return companies.values().stream().limit(5).collect(Collectors.toList());
+        }
+        return null;
     }
 
     private void createCompany(String id, String companyName, int employeesNumber) {
