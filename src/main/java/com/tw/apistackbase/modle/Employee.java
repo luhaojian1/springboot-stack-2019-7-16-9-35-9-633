@@ -5,6 +5,7 @@ public class Employee {
     private String name;
     private String gender;
     private int age;
+    private int salary;
 
     public String getId() {
         return id;
@@ -36,5 +37,13 @@ public class Employee {
 
     public void setAge(int age) {
         this.age = age;
+    }
+
+    public int getSalary() {
+        return salary;
+    }
+
+    public void setSalary(int salary) {
+        this.salary = salary;
     }
 }

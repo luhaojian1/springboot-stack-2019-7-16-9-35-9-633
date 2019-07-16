@@ -1,6 +1,7 @@
 package com.tw.apistackbase.service;
 
 import com.tw.apistackbase.modle.Company;
+import com.tw.apistackbase.modle.Employee;
 import com.tw.apistackbase.repository.CompanyRepostory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,5 +21,9 @@ public class CompanyService {
 
     public Company findById(String companyId) {
         return companyRepostory.findById(companyId);
+    }
+
+    public List<Employee> findCompanyEmployeesByCompanyId(String companyId) {
+        return companyRepostory.findCompanyEmployeesByCompanyId(companyId);
     }
 }

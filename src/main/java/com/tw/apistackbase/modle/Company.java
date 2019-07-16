@@ -3,23 +3,25 @@ package com.tw.apistackbase.modle;
 import java.util.List;
 
 public class Company {
-    private String id;
-    private String name;
+    private String companyId;
+    private String companyName;
+    private int employeesNumber;
     private List<Employee> employees;
-    public String getId() {
-        return id;
+
+    public String getCompanyId() {
+        return companyId;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setCompanyId(String companyId) {
+        this.companyId = companyId;
     }
 
-    public String getName() {
-        return name;
+    public String getCompanyName() {
+        return companyName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
     }
 
     public List<Employee> getEmployees() {
@@ -28,5 +30,13 @@ public class Company {
 
     public void setEmployees(List<Employee> employees) {
         this.employees = employees;
+    }
+
+    public int getEmployeesNumber() {
+        return employeesNumber;
+    }
+
+    public void setEmployeesNumber(int employeesNumber) {
+        this.employeesNumber = employeesNumber;
     }
 }

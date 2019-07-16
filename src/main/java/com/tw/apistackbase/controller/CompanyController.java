@@ -1,6 +1,7 @@
 package com.tw.apistackbase.controller;
 
 import com.tw.apistackbase.modle.Company;
+import com.tw.apistackbase.modle.Employee;
 import com.tw.apistackbase.service.CompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,5 +25,10 @@ public class CompanyController {
         return companyService.findById(companyId);
     }
 
+
+    @GetMapping("/companies/{companyId}/employees")
+    public List<Employee> findCompanyEmployeesByCompanyId(@PathVariable String companyId) {
+        return companyService.findCompanyEmployeesByCompanyId(companyId);
+    }
 
 }
