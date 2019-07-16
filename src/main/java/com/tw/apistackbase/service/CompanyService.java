@@ -18,4 +18,7 @@ public class CompanyService {
     }
 
 
+    public Company findById(String companyId) {
+        return companyRepostory.findById(companyId);
+    }
 }

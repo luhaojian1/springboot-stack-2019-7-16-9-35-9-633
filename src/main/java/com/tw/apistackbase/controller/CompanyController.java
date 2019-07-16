@@ -19,7 +19,10 @@ public class CompanyController {
         return companyService.findAll();
     }
 
-
+    @GetMapping("/companies/{companyId}")
+    public Company findCompanyById(@PathVariable String companyId) {
+        return companyService.findById(companyId);
+    }
 
 
 }

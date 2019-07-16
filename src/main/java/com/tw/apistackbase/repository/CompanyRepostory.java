@@ -7,4 +7,6 @@ import java.util.List;
 public interface CompanyRepostory {
 
     List<Company> findAll();
+
+    Company findById(String companyId);
 }

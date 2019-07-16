@@ -22,6 +22,12 @@ public class CompanyRepostoryImpl implements CompanyRepostory{
     public List<Company> findAll() {
         return new ArrayList<>(companys.values());
     }
+
+    @Override
+    public Company findById(String companyId) {
+        return companys.get(companyId);
+    }
+
     private void createCompany(String id, String name){
         Company company = new Company();
         company.setId(id);
