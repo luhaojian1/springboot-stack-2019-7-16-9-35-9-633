@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 
 @Repository
 public class EmployeesRepostoryImpl implements EmployeesRepostory {
-    public static Map<String, Employee> employees = new HashMap<>();
+    private static Map<String, Employee> employees = new HashMap<>();
 
     @Override
     public Employee createEmployee(Employee employee) {
@@ -23,12 +23,12 @@ public class EmployeesRepostoryImpl implements EmployeesRepostory {
 
     public EmployeesRepostoryImpl() {
         createEmployee("111", "小明", 18, "female", 7000);
-        createEmployee("222", "小明2", 12, "female", 8000);
+        createEmployee("222", "小明2", 12, "male", 8000);
         createEmployee("333", "小明3", 13, "female", 9000);
-        createEmployee("444", "小明4", 14, "female", 6000);
+        createEmployee("444", "小明4", 14, "male", 6000);
     }
 
-    void createEmployee(String id, String name, int age, String gender, int salary) {
+    private void createEmployee(String id, String name, int age, String gender, int salary) {
         Employee employee = new Employee();
         employee.setId(id);
         employee.setName(name);
@@ -68,5 +68,10 @@ public class EmployeesRepostoryImpl implements EmployeesRepostory {
     @Override
     public List<Employee> findEmployeesByPageAndPageSize(int page, int pageSize) {
         return employees.values().stream().limit(pageSize - page + 1).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Employee> findEmployeesByGender(String gender) {
+        return employees.values().stream().filter(employee -> employee.getGender().equals("male")).collect(Collectors.toList());
     }
 }

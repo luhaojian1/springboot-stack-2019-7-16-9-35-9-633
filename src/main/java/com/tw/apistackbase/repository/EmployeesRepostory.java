@@ -18,4 +18,6 @@ public interface EmployeesRepostory {
     List<Employee> findSuitableEmployeesByAge(int age);
 
     List<Employee> findEmployeesByPageAndPageSize(int page, int pageSize);
+
+    List<Employee> findEmployeesByGender(String gender);
 }

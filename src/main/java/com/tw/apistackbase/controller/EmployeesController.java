@@ -48,4 +48,9 @@ public class EmployeesController {
     public List<Employee> findEmployeesByPageAndPageSize(@RequestParam int page, @RequestParam int pageSize) {
         return employeeSerive.findEmployeesByPageAndPageSize(page, pageSize);
     }
+
+    @GetMapping(value = "/employees", params = {"gender"})
+    public List<Employee> findEmployeesByGender(@RequestParam String gender) {
+        return employeeSerive.findEmployeesByGender(gender);
+    }
 }

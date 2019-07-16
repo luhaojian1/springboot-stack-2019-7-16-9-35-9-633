@@ -43,4 +43,8 @@ public class EmployeeSerive {
         }
         return employeesRepostory.findEmployeesByPageAndPageSize(page, pageSize);
     }
+
+    public List<Employee> findEmployeesByGender(String gender) {
+        return employeesRepostory.findEmployeesByGender(gender);
+    }
 }
