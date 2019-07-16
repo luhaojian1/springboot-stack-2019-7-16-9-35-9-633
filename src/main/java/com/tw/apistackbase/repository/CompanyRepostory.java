@@ -14,4 +14,6 @@ public interface CompanyRepostory {
     List<Employee> findCompanyEmployeesByCompanyId(String companyId);
 
     List<Company> findCompaniesByPageandPageSize(int page, int pageSize);
+
+    Company createCompany(Company company);
 }

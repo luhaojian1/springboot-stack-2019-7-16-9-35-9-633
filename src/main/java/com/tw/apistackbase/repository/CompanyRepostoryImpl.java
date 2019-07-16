@@ -44,6 +44,14 @@ public class CompanyRepostoryImpl implements CompanyRepostory {
         return null;
     }
 
+    @Override
+    public Company createCompany(Company company) {
+        String companyId = UUID.randomUUID().toString();
+        company.setCompanyId(companyId);
+        companies.put(companyId, company);
+        return companies.get(companyId);
+    }
+
     private void createCompany(String id, String companyName, int employeesNumber) {
         Company company = new Company();
         company.setCompanyId(id);
