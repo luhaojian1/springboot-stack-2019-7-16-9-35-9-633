@@ -1,12 +1,9 @@
 package com.tw.apistackbase;
-
-
 import com.tw.apistackbase.controller.EmployeesController;
 import com.tw.apistackbase.modle.Employee;
 import com.tw.apistackbase.service.EmployeeSerive;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.ArgumentMatchers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -19,9 +16,11 @@ import java.util.List;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -80,10 +79,29 @@ public class EmployeesControllerTest {
         employee.setAge(20);
         employee.setGender("female");
         employee.setSalary(6000);
-        employees.add(employee);
         employees.add(new Employee());
 
         when(employeeSerive.findAll()).thenReturn(employees);
+        ResultActions resultActions = mvc.perform(get("/employees"));
+        resultActions.andExpect(status().isOk()).andExpect(jsonPath("$", hasSize(1)));
+
+
+    }
+
+    @Test
+    public void should_return_correct_employee_list_when_findAll_employee() throws Exception {
+
+        List<Employee> employees = new ArrayList<>();
+        Employee employee = new Employee();
+        employee.setId("111");
+        employee.setName("小明");
+        employee.setAge(20);
+        employee.setGender("female");
+        employee.setSalary(6000);
+        employees.add(employee);
+        employees.add(new Employee());
+
+        when(employeeSerive.findSuitableEmployeesByAge(anyInt())).thenReturn(employees);
         ResultActions resultActions = mvc.perform(get("/employees"));
         resultActions.andExpect(status().isOk()).andExpect(jsonPath("$", hasSize(2)));
     }
