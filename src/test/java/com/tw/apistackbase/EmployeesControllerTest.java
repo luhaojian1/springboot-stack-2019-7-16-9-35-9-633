@@ -36,13 +36,13 @@ public class EmployeesControllerTest {
         employee.setName("小明");
         employee.setAge(18);
         employee.setGender("female");
+        employee.setSalary(6000);
 
         when(employeeSerive.findById(anyString())).thenReturn(employee);
-
         ResultActions resultActions = mvc.perform(get("/employees/{employeeId}", employee.getId()));
-
-
-        resultActions.andExpect(status().isOk()).andExpect(jsonPath("$.name", is("小明")));
+        resultActions.andExpect(status().isOk()).andExpect(jsonPath("$.name", is("小明")))
+                .andExpect(jsonPath("$.id", is("111"))).andExpect(jsonPath("$.age", is(18)))
+                .andExpect(jsonPath("$.gender", is("female"))).andExpect(jsonPath("$.salary", is(6000)));
 
 
     }
