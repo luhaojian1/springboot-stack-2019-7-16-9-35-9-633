@@ -20,8 +20,7 @@ import java.util.List;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -136,5 +135,27 @@ public class CompanyControllerTest {
         ResultActions resultActions = mvc.perform(get("/companies/{companyId}/employees", "a123"));
         resultActions.andExpect(status().isOk()).andExpect(jsonPath("$[0].name", is("xiaoming")))
                 .andExpect(jsonPath("$[0].id", is("111")));
+    }
+
+    @Test
+    public void should_return_correct_company_list_when_findCompaniesByPageAndPageSize() throws Exception {
+
+        Company company = new Company();
+        company.setCompanyId("a123");
+        company.setCompanyName("CVTE");
+        company.setEmployeesNumber(200);
+        List<Employee> employees = new ArrayList<>();
+        Employee employee = new Employee("111", "xiaoming", "female", 20, 6000);
+        employees.add(employee);
+        company.setEmployees(employees);
+        List<Company> companies = new ArrayList<>();
+        companies.add(company);
+
+        when(companyService.findCompaniesByPageandPageSize(anyInt(), anyInt())).thenReturn(companies);
+        ResultActions resultActions = mvc.perform(get("/companies").contentType(MediaType.APPLICATION_JSON).param("page", "1").param("pageSize", "5"));
+        resultActions.andExpect(status().isOk()).andExpect(jsonPath("$[0].companyName", is("CVTE")))
+                .andExpect(jsonPath("$[0].companyId", is("a123")))
+                .andExpect(jsonPath("$[0].employeesNumber", is(200)))
+                .andExpect(jsonPath("$[0].employees", hasSize(1)));
     }
 }
