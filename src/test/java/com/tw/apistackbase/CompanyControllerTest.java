@@ -38,13 +38,8 @@ public class CompanyControllerTest {
         company.setCompanyName("CVTE");
         company.setEmployeesNumber(200);
         List<Employee> employees = new ArrayList<>();
-        Employee employee = new Employee();
-        employee.setId("111");
-        employee.setName("小明");
-        employee.setAge(20);
-        employee.setGender("female");
-        employee.setSalary(6000);
-        employees.add(new Employee());
+        Employee employee = new Employee("111", "小明", "female", 20, 6000);
+        employees.add(employee);
         company.setEmployees(employees);
 
         when(companyService.findById(anyString())).thenReturn(company);
