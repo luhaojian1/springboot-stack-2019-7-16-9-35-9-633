@@ -16,6 +16,7 @@ import org.springframework.test.web.servlet.ResultActions;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
@@ -47,5 +48,26 @@ public class CompanyControllerTest {
         resultActions.andExpect(status().isOk()).andExpect(jsonPath("$.companyName", is("CVTE")))
                 .andExpect(jsonPath("$.companyId", is("a123")))
                 .andExpect(jsonPath("$.employeesNumber", is(200)));
+    }
+
+    @Test
+    public void should_return_correct_companies_when_findAll() throws Exception {
+        Company company = new Company();
+        company.setCompanyId("a123");
+        company.setCompanyName("CVTE");
+        company.setEmployeesNumber(200);
+        List<Employee> employees = new ArrayList<>();
+        Employee employee = new Employee("111", "xiaoming", "female", 20, 6000);
+        employees.add(employee);
+        company.setEmployees(employees);
+        List<Company> companies = new ArrayList<>();
+        companies.add(company);
+
+        when(companyService.findAll()).thenReturn(companies);
+        ResultActions resultActions = mvc.perform(get("/companies"));
+        resultActions.andExpect(status().isOk()).andExpect(jsonPath("$[0].companyName", is("CVTE")))
+                .andExpect(jsonPath("$[0].companyId", is("a123")))
+                .andExpect(jsonPath("$[0].employeesNumber", is(200)))
+                .andExpect(jsonPath("$[0].employees", hasSize(1)));
     }
 }
