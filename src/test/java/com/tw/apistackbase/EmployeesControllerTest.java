@@ -107,12 +107,31 @@ public class EmployeesControllerTest {
     }
 
     @Test
-    public void should_return_correct_employee_when_updateEmployee_given_a_new_employee() throws Exception {
+    public void should_return_correct_employee_when_updateEmployee_given_a_modify_employee() throws Exception {
 
         Employee employee = new Employee("111", "xiaoming", "female", 20, 6000);
 
         when(employeeSerive.updateEmployee(ArgumentMatchers.any())).thenReturn(employee);
         ResultActions resultActions = mvc.perform(put("/employees/{employeeId}", employee.getId()).contentType(MediaType.APPLICATION_JSON).content("{\n" +
+                "        \"id\": \"111\",\n" +
+                "        \"name\": \"小明\",\n" +
+                "        \"gender\": \"female\",\n" +
+                "        \"age\": 18,\n" +
+                "        \"salary\": 7000\n" +
+                "    }"));
+        resultActions.andExpect(status().isOk()).andExpect(jsonPath("$.name", is("xiaoming")))
+                .andExpect(jsonPath("$.id", is("111"))).andExpect(jsonPath("$.age", is(20)))
+                .andExpect(jsonPath("$.gender", is("female"))).andExpect(jsonPath("$.salary", is(6000)));
+    }
+
+
+    @Test
+    public void should_return_correct_employee_when_createEmployee_given_a_new_employee() throws Exception {
+
+        Employee employee = new Employee("111", "xiaoming", "female", 20, 6000);
+
+        when(employeeSerive.createEmployee(ArgumentMatchers.any())).thenReturn(employee);
+        ResultActions resultActions = mvc.perform(post("/employees").contentType(MediaType.APPLICATION_JSON).content("{\n" +
                 "        \"id\": \"111\",\n" +
                 "        \"name\": \"小明\",\n" +
                 "        \"gender\": \"female\",\n" +
