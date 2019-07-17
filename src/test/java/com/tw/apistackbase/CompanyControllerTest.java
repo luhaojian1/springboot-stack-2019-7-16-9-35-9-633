@@ -20,7 +20,8 @@ import java.util.List;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
-import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -74,29 +75,29 @@ public class CompanyControllerTest {
     }
 
 
-        @Test
-        public void should_return_correct_company_when_updateCompany() throws Exception {
-            Company company = new Company();
-            company.setCompanyId("a123");
-            company.setCompanyName("CVTE");
-            company.setEmployeesNumber(200);
-            List<Employee> employees = new ArrayList<>();
-            Employee employee = new Employee("111", "xiaoming", "female", 20, 6000);
-            employees.add(employee);
-            company.setEmployees(employees);
+    @Test
+    public void should_return_correct_company_when_updateCompany() throws Exception {
+        Company company = new Company();
+        company.setCompanyId("a123");
+        company.setCompanyName("CVTE");
+        company.setEmployeesNumber(200);
+        List<Employee> employees = new ArrayList<>();
+        Employee employee = new Employee("111", "xiaoming", "female", 20, 6000);
+        employees.add(employee);
+        company.setEmployees(employees);
 
 
-            when(companyService.updateCompany(ArgumentMatchers.any())).thenReturn(company);
-            ResultActions resultActions = mvc.perform(put("/companies/{companyId}", company.getCompanyId()).contentType(MediaType.APPLICATION_JSON).content("{\n" +
-                    "        \"companyId\": \"a123\",\n" +
-                    "        \"companyName\": \"CVTE\",\n" +
-                    "        \"employeesNumber\": 200\n" +
-                    "    }"));
-            resultActions.andExpect(status().isOk()).andExpect(jsonPath("$.companyName", is("CVTE")))
-                    .andExpect(jsonPath("$.companyId", is("a123")))
-                    .andExpect(jsonPath("$.employeesNumber", is(200)))
-                    .andExpect(jsonPath("$.employees", hasSize(1)));
-        }
+        when(companyService.updateCompany(ArgumentMatchers.any())).thenReturn(company);
+        ResultActions resultActions = mvc.perform(put("/companies/{companyId}", company.getCompanyId()).contentType(MediaType.APPLICATION_JSON).content("{\n" +
+                "        \"companyId\": \"a123\",\n" +
+                "        \"companyName\": \"CVTE\",\n" +
+                "        \"employeesNumber\": 200\n" +
+                "    }"));
+        resultActions.andExpect(status().isOk()).andExpect(jsonPath("$.companyName", is("CVTE")))
+                .andExpect(jsonPath("$.companyId", is("a123")))
+                .andExpect(jsonPath("$.employeesNumber", is(200)))
+                .andExpect(jsonPath("$.employees", hasSize(1)));
+    }
 
     @Test
     public void should_return_correct_company_when_createCompany() throws Exception {
@@ -157,5 +158,23 @@ public class CompanyControllerTest {
                 .andExpect(jsonPath("$[0].companyId", is("a123")))
                 .andExpect(jsonPath("$[0].employeesNumber", is(200)))
                 .andExpect(jsonPath("$[0].employees", hasSize(1)));
+    }
+
+    @Test
+    public void should_return_correct_company_when_deleteCompany_by_id() throws Exception {
+        Company company = new Company();
+        company.setCompanyId("a123");
+        company.setCompanyName("CVTE");
+        company.setEmployeesNumber(200);
+        List<Employee> employees = new ArrayList<>();
+        Employee employee = new Employee("111", "小明", "female", 20, 6000);
+        employees.add(employee);
+        company.setEmployees(employees);
+
+        when(companyService.deleteCompany(anyString())).thenReturn(company);
+        ResultActions resultActions = mvc.perform(delete("/companies/{companyId}", company.getCompanyId()));
+        resultActions.andExpect(status().isOk()).andExpect(jsonPath("$.companyName", is("CVTE")))
+                .andExpect(jsonPath("$.companyId", is("a123")))
+                .andExpect(jsonPath("$.employeesNumber", is(200)));
     }
 }
