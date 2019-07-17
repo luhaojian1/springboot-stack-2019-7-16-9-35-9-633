@@ -74,7 +74,7 @@ public class CompanyControllerTest {
                 .andExpect(jsonPath("$[0].employees", hasSize(1)));
     }
 
-    /*
+
         @Test
         public void should_return_correct_company_when_updateCompany() throws Exception {
             Company company = new Company();
@@ -88,17 +88,17 @@ public class CompanyControllerTest {
 
 
             when(companyService.updateCompany(ArgumentMatchers.any())).thenReturn(company);
-            ResultActions resultActions = mvc.perform(put("/companies/{companyId}",anyString()).contentType(MediaType.APPLICATION_JSON).content("{\n" +
+            ResultActions resultActions = mvc.perform(put("/companies/{companyId}", company.getCompanyId()).contentType(MediaType.APPLICATION_JSON).content("{\n" +
                     "        \"companyId\": \"a123\",\n" +
                     "        \"companyName\": \"CVTE\",\n" +
-                    "        \"employeesNumber\": 200,\n" +
+                    "        \"employeesNumber\": 200\n" +
                     "    }"));
             resultActions.andExpect(status().isOk()).andExpect(jsonPath("$.companyName", is("CVTE")))
                     .andExpect(jsonPath("$.companyId", is("a123")))
                     .andExpect(jsonPath("$.employeesNumber", is(200)))
                     .andExpect(jsonPath("$.employees", hasSize(1)));
         }
-    */
+
     @Test
     public void should_return_correct_company_when_createCompany() throws Exception {
         Company company = new Company();
