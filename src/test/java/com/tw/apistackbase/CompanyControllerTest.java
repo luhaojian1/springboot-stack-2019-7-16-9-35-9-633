@@ -122,4 +122,19 @@ public class CompanyControllerTest {
                 .andExpect(jsonPath("$.employeesNumber", is(200)))
                 .andExpect(jsonPath("$.employees", hasSize(1)));
     }
+
+    @Test
+    public void should_return_correct_employee_list_when_findCompanyEmployeesByCompanyId() throws Exception {
+
+
+        List<Employee> employees = new ArrayList<>();
+        Employee employee = new Employee("111", "xiaoming", "female", 20, 6000);
+        employees.add(employee);
+
+
+        when(companyService.findCompanyEmployeesByCompanyId(anyString())).thenReturn(employees);
+        ResultActions resultActions = mvc.perform(get("/companies/{companyId}/employees", "a123"));
+        resultActions.andExpect(status().isOk()).andExpect(jsonPath("$[0].name", is("xiaoming")))
+                .andExpect(jsonPath("$[0].id", is("111")));
+    }
 }
