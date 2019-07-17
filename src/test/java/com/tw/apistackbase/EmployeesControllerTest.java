@@ -5,9 +5,11 @@ import com.tw.apistackbase.modle.Employee;
 import com.tw.apistackbase.service.EmployeeSerive;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentMatchers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
@@ -15,13 +17,11 @@ import org.springframework.test.web.servlet.ResultActions;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -104,5 +104,23 @@ public class EmployeesControllerTest {
                 .andExpect(jsonPath("$[0].age", is(employees.get(0).getAge())))
                 .andExpect(jsonPath("$[0].gender", is(employees.get(0).getGender())))
                 .andExpect(jsonPath("$[0].salary", is(employees.get(0).getSalary())));
+    }
+
+    @Test
+    public void should_return_correct_employee_when_updateEmployee_given_a_new_employee() throws Exception {
+
+        Employee employee = new Employee("111", "xiaoming", "female", 20, 6000);
+
+        when(employeeSerive.updateEmployee(ArgumentMatchers.any())).thenReturn(employee);
+        ResultActions resultActions = mvc.perform(put("/employees/{employeeId}", employee.getId()).contentType(MediaType.APPLICATION_JSON).content("{\n" +
+                "        \"id\": \"111\",\n" +
+                "        \"name\": \"小明\",\n" +
+                "        \"gender\": \"female\",\n" +
+                "        \"age\": 18,\n" +
+                "        \"salary\": 7000\n" +
+                "    }"));
+        resultActions.andExpect(status().isOk()).andExpect(jsonPath("$.name", is("xiaoming")))
+                .andExpect(jsonPath("$.id", is("111"))).andExpect(jsonPath("$.age", is(20)))
+                .andExpect(jsonPath("$.gender", is("female"))).andExpect(jsonPath("$.salary", is(6000)));
     }
 }
