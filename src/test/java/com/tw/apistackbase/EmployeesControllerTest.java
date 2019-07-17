@@ -17,6 +17,7 @@ import java.util.List;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
@@ -82,6 +83,22 @@ public class EmployeesControllerTest {
         when(employeeSerive.findEmployeesByGender(anyString())).thenReturn(employees);
         ResultActions resultActions = mvc.perform(get("/employees?gender=male"));
         resultActions.andExpect(status().isOk()).andExpect(jsonPath("$", hasSize(1)))
+                .andExpect(jsonPath("$[0].id", is(employees.get(0).getId())))
+                .andExpect(jsonPath("$[0].name", is(employees.get(0).getName())))
+                .andExpect(jsonPath("$[0].age", is(employees.get(0).getAge())))
+                .andExpect(jsonPath("$[0].gender", is(employees.get(0).getGender())))
+                .andExpect(jsonPath("$[0].salary", is(employees.get(0).getSalary())));
+    }
+
+    @Test
+    public void should_return_employees_when_findEmployeesByPageAndPageSize_given_page_is_1_and_pageSize_is_5() throws Exception {
+
+        List<Employee> employees = new ArrayList<>();
+        employees.add(new Employee("222", "xiaoming", "male", 20, 7000));
+
+        when(employeeSerive.findEmployeesByPageAndPageSize(anyInt(), anyInt())).thenReturn(employees);
+        ResultActions resultActions = mvc.perform(get("/employees?page=1&pageSize=5"));
+        resultActions.andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].id", is(employees.get(0).getId())))
                 .andExpect(jsonPath("$[0].name", is(employees.get(0).getName())))
                 .andExpect(jsonPath("$[0].age", is(employees.get(0).getAge())))
